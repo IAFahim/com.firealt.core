@@ -137,14 +137,14 @@ namespace FireAlt.Core.Editor
         }
 
         /// <summary>
-        /// Searches in "Editor Resources"
+        /// Loads an asset from a package's "Editor Default Resources" folder by its canonical UPM path.
         /// </summary>
-        public static T LoadEditorResource<T>(string relativeFilePath, string rootFolderValidationName) where T : Object
+        public static T LoadEditorResource<T>(string relativeFilePath, string packageName) where T : Object
         {
             // Canonical UPM package path (resolves for embedded + PackageCache installs); mirrors SearchWindow.RootUIPath.
             // The old project-wide FindAssets("Editor Default Resources") + parent-name validation missed the package's
             // own folder, so [InitializeOnLoad] DrawerStyleResources threw on every domain reload.
-            var assetPath = $"Packages/{rootFolderValidationName}/Editor Default Resources/{relativeFilePath}";
+            var assetPath = $"Packages/{packageName}/Editor Default Resources/{relativeFilePath}";
             var asset = AssetDatabase.LoadAssetAtPath<T>(assetPath);
             if (asset == null)
             {
