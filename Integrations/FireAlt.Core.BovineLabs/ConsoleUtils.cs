@@ -31,11 +31,12 @@ namespace FireAlt.Core
 #if BL_ESSENSE
         public static BovineLabs.Essence.IntrinsicWriter.Lookup GetIntrinsicLookup(ref SystemState state)
         {
-            GetWorld(out var world);
-            
             var lookup = new BovineLabs.Essence.IntrinsicWriter.Lookup();
             lookup.Create(ref state);
-            lookup.Update(ref state, world.EntityManager.GetUnmanagedSingleton<BovineLabs.Essence.Data.EssenceConfig>());
+
+            var singletonData = new BovineLabs.Essence.IntrinsicWriter.SingletonData();
+            singletonData.Create(ref state);
+            lookup.Update(ref state, singletonData);
 
             return lookup;
         }
